@@ -1,0 +1,34 @@
+#! /bin/sh
+# /etc/init.d/tablet
+#
+
+# Some things that run always
+echo "Removing e100..."
+rmmod e100
+echo "Removed e100"
+sleep 5
+echo "Configuring Wireless..."
+iwconfig eth1 essid "ISLER-DS"
+dhclient eth1
+echo "Done Configuring Wireless"
+echo "Activating Extra Swap..."
+swapon /dev/sdb1
+echo "Swap enabled from 4GB Flash Drive"
+echo "Script completed"
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Starting Tablet Script"
+    ;;
+  stop)
+    echo "Nothing really to stop..."
+    ;;
+  *)
+    echo "Usage: /etc/init.d/tablet {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
+
